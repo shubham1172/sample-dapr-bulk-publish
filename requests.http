@@ -1,0 +1,94 @@
+#### Simple publish
+
+POST http://localhost:3500/v1.0/publish/pubsub/topic HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "age": 42,
+    "event": "user.created"
+}
+
+#### Simple bulk publish
+
+POST http://localhost:3500/v1.0-alpha1/publish/bulk/pubsub/topic HTTP/1.1
+Content-Type: application/json
+
+[
+    {
+        "entryId": "1",
+        "event": {
+            "name": "John Doe",
+            "age": 42,
+            "event": "user.created"
+        },
+        "contentType": "application/json"
+    },
+    {
+        "entryId": "2",
+        "event": {
+            "name": "Jane Doe",
+            "age": 42,
+            "event": "user.created"
+        },
+        "contentType": "application/json"
+    }
+]
+
+#### Publish with cloud event
+
+POST http://localhost:3500/v1.0/publish/pubsub/topic HTTP/1.1
+Content-Type: application/cloudevents+json
+
+{
+    "specversion": "1.0",
+    "type": "com.github.dapr.event.sent",
+    "source": "dapr.io",
+    "id": "1234-1234-1234",
+    "data": {
+        "name": "John Doe",
+        "age": 42,
+        "event": "user.created"
+    },
+    "datacontenttype": "application/json"
+}
+
+#### Bulk publish with cloud event
+
+POST http://localhost:3500/v1.0-alpha1/publish/bulk/pubsub/topic HTTP/1.1
+Content-Type: application/json
+
+[
+    {
+        "entryId": "1",
+        "event": {
+            "specversion": "1.0",
+            "type": "com.github.dapr.event.sent",
+            "source": "dapr.io",
+            "id": "1234-1234-1234",
+            "data": {
+                "name": "John Doe",
+                "age": 42,
+                "event": "user.created"
+            },
+            "datacontenttype": "application/json"
+        },
+        "contentType": "application/cloudevents+json"
+    },
+    {
+        "entryId": "2",
+        "event": {
+            "specversion": "1.0",
+            "type": "com.github.dapr.event.sent",
+            "source": "dapr.io",
+            "id": "2345-2345-2345",
+            "data": {
+                "name": "Jane Doe",
+                "age": 42,
+                "event": "user.created"
+            },
+            "datacontenttype": "application/json"
+        },
+        "contentType": "application/cloudevents+json"
+    }
+]
